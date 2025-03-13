@@ -1,0 +1,11 @@
+---
+description: Guidelines for using shadcn/ui components in the project.
+globs: Apply to files in /components/ and /pages/ directories, or files containing "components" or "ui" in their name.
+alwaysApply: false
+---
+- Use shadcn/ui components for all UI elements (e.g., <Button>, <Textarea>).
+- Style with Tailwind CSS, applying mobile-first responsive design.
+- Install components via CLI: npx shadcn@latest add <component>.
+- Customize components in /components/ui/ directory, avoid global styles.
+- Example: <Button className="bg-orange-500 text-white" disabled={isLoading}>
+- Reference Zonos interface for UI design, maintain component list in .cursor/context/components.md.

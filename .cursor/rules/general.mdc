@@ -1,0 +1,12 @@
+---
+description: General coding guidelines for the OSS NotebookLM with Voice Cloning project.
+globs: Apply to all files in the project (*.tsx, *.ts, *.json, *.md).
+alwaysApply: false
+---
+- This project targets the OSS NotebookLM with Voice Cloning app.
+- Use TypeScript with React and Next.js as the foundation.
+- Prioritize modularity and reusability, avoiding code duplication.
+- Use clear, technical variable names (e.g., isLoading, hasError), add comments only when necessary.
+- Handle errors with shadcn/ui <Toast> component to notify users.
+- Follow requirements defined in PRD (previously documented, now removed from docs).
+- Answer Korean but use English in codes and docs.

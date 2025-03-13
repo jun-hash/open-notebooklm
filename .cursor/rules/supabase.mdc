@@ -1,0 +1,13 @@
+---
+description: Guidelines for integrating Supabase with the project.
+globs: Apply to files in /lib/ directory, or files containing "supabase" or "api" in their name.
+alwaysApply: false
+---
+- Integrate @supabase/ssr with Next.js for server-side rendering.
+- Create clients with createServerClient and createBrowserClient.
+- Store audio files in Supabase Storage bucket 'audio_files'.
+- Database table: generated_voices (id, user_id, text, voice, audio_url, duration, timestamp, is_public, likes_count, comments).
+- Use Edge Functions for voice generation (e.g., /functions/v1/generate-voice).
+- Example: const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+- Store schema in .cursor/context/schema.json.
+- Use Supabase MCP Server

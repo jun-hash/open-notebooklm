@@ -1,103 +1,89 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { VoiceGenerator } from '@/components/VoiceGenerator';
+import { HistoryTab } from '@/components/HistoryTab';
+import { getGeneratedVoices } from '@/lib/supabase';
+import { SAMPLE_USER_ID } from '@/lib/voice-types';
+import { Mic, Clock, Podcast } from 'lucide-react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isLoading, setIsLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // We're keeping the API call but not storing the results since 
+        // we're no longer showing the generated voices in the UI
+        await getGeneratedVoices(SAMPLE_USER_ID);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-3xl -mt-8">
+        <div className="text-center py-12">Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full max-w-3xl -mt-8">
+      <Tabs defaultValue="generate" className="w-full">
+        <div className="tabs-container flex items-center gap-2 md:gap-4 mb-8 md:flex-row flex-col">
+          <div className="tabs-list-wrapper w-full md:w-auto">
+            <TabsList className="inline-flex h-10 items-center justify-center rounded-lg bg-[#151515] p-1 text-gray-400">
+              <TabsTrigger 
+                value="generate" 
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-[#C26833]/20 data-[state=active]:text-[#C26833] data-[state=active]:shadow-sm"
+              >
+                <Podcast className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                Generate
+              </TabsTrigger>
+              <TabsTrigger 
+                value="history" 
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-[#C26833]/20 data-[state=active]:text-[#C26833] data-[state=active]:shadow-sm"
+              >
+                <Clock className="w-4 h-4 mr-2" />
+                History
+              </TabsTrigger>
+              <TabsTrigger 
+                value="voices" 
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-[#C26833]/20 data-[state=active]:text-[#C26833] data-[state=active]:shadow-sm"
+              >
+                <Mic className="w-4 h-4 mr-2" />
+                Voices
+              </TabsTrigger>
+            </TabsList>
+          </div>
+          <div className="search-wrapper w-full md:w-auto"></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <TabsContent value="generate" className="space-y-6">
+          <VoiceGenerator />
+        </TabsContent>
+
+        <TabsContent value="history">
+          <HistoryTab />
+        </TabsContent>
+
+        <TabsContent value="voices">
+          <div className="space-y-6">
+            <h2 className="text-2xl font-semibold">Voice Library</h2>
+            <div className="bg-[#1A1A1A] rounded-lg p-6 text-center text-white/60">
+              Coming soon - Voice management features
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
