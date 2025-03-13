@@ -1,24 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nari - Voice Generation App
+
+This is a Next.js project for generating and cloning voices using text-to-speech technology.
+
+## Features
+
+- Text-to-speech generation with multiple voice options
+- Voice cloning capability (coming soon)
+- History of generated voices
+- Custom voice management
+- Audio playback with controls
+
+## Tech Stack
+
+- Next.js 15.2.2 with App Router
+- TypeScript
+- Tailwind CSS
+- shadcn/ui components
+- Supabase for backend and storage
+- Lucide React for icons
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.17 or later
+- A Supabase account and project
+
+### Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/nari-voice-app.git
+cd nari-voice-app
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables:
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+4. Set up Supabase:
+
+- Create a new Supabase project
+- Create a `generated_voices` table with the following schema:
+  - `id`: uuid (primary key)
+  - `user_id`: uuid (optional)
+  - `text`: text
+  - `voice`: text
+  - `audio_url`: text
+  - `duration`: integer
+  - `timestamp`: timestamp with timezone
+  - `is_public`: boolean
+  - `likes_count`: integer
+  - `comments`: text array (optional)
+
+5. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app`: Next.js App Router pages
+- `src/components`: React components
+- `src/lib`: Utility functions and API clients
+- `src/app/api`: API route handlers
+
+## License
+
+MIT
 
 ## Learn More
 
