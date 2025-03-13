@@ -5,10 +5,10 @@ export async function generateTTS(text: string, voice: string) {
 
   console.log(`Generating TTS for text: "${text}" with voice: "${voice}"`);
 
-  // For development, return a mock audio URL and duration
+  // Return fixed sample audio URL and duration
   return {
-    audioUrl: `https://example.com/audio/${Date.now()}-${voice.replace(/\s+/g, '-').toLowerCase()}.mp3`,
-    duration: Math.ceil(text.length / 20) // Rough estimate: 1 second per 20 characters
+    audioUrl: 'https://jodzpnadsmtgpytxpnum.supabase.co/storage/v1/object/sign/nari-notebook/sample_fe.wav?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJuYXJpLW5vdGVib29rL3NhbXBsZV9mZS53YXYiLCJpYXQiOjE3NDE4NTMzMDEsImV4cCI6MTc3MzM4OTMwMX0.DWUEZ3PmeFyYUWCbJN_EXxyvHZMzayZjh7PZ1DJ_wL4',
+    duration: 5 // Fixed duration for sample audio in seconds
   };
 }
 
